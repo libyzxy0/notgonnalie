@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&family=Kalam:wght@300&family=Quicksand:wght@300&display=swap');
+/*
+font-family: 'Kalam', cursive;
+font-family: 'Nunito', sans-serif;
+font-family: 'Quicksand', sans-serif;
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --background: #ffffff;
+  --foreground: #f5f5f5;
+  --color-a: #00FFCA;
+  --color-b: #B9F3E4;
+  --color-c: 
+#C0EEF2;
+  --text-color-a: #1A1A1A;
+  --text-color-b: #3a3a3a;
+  --font-stylish: 'Kalam', cursive;
+  --font-normal: 'Quicksand', sans-serif;
+  --font-primary: 'Nunito', sans-serif;;
+}
+hidden {
+  display: none;
+}
