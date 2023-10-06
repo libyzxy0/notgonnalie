@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const database = require('./src/firebase.js');
 const jwt = require('./src/jwt');
 const corsOptions = {
-  origin: 'https://notgonnalie.vercel.app',
+  origins: ['https://notgonnalie.vercel.app', 'https://notgonnalie.libyzxy0.repl.co'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
