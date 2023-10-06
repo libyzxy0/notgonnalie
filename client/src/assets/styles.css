@@ -22,6 +22,6 @@ font-family: 'Quicksand', sans-serif;
   --font-normal: 'Quicksand', sans-serif;
   --font-primary: 'Nunito', sans-serif;;
 }
-hidden {
+.hidden {
   display: none;
 }

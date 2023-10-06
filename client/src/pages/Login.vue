@@ -1,0 +1,101 @@
+<template>
+  <div id="login" :class="isLoggedIn ? 'hidden' : ''">
+    <h1>Ngl - Not Gonna Lie</h1>
+    <p>Received/Send Message anonymously!</p>
+    <div class="content">
+      <input type="text" placeholder="@libyzxy0" v-model="username">
+      <button @click="login()">Create My Account</button>
+    </div>
+    <footer>
+      <p>By Continuing, You agree to our <a>Terms of Use</a> and have read and agreed to our <a>Privacy Policy</a></p>
+    </footer>
+  </div>
+</template>
+<style scoped>
+  #login {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, var(--color-c) 0%, var(--color-b) 100%);
+    text-align: center;
+  }
+  h1 {
+    font-family: var(--font-stylish);
+    color: var(--text-color-a);
+    margin-top: 5rem;
+  }
+  p {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    color: var(--text-color-b);
+  }
+  .content {
+    margin-top: 3rem;
+    width: 100%;
+  }
+  input {
+    width: 80%;
+    height: 3.5rem;
+    opacity: 0.8;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    padding: 20px;
+    font-size: 19px;
+    font-weight: 600;
+    font-family: var(--font-normal);
+    box-shadow: 0px 4px 6px 0px rgba(50,50,93,0.11), 0px 1px 3px 0px rgba(0,0,0,0.08);
+  }
+  button {
+    width: 80%;
+    height: 3.5rem;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    font-size: 19px;
+    font-weight: 600;
+    font-family: var(--font-normal);
+    box-shadow: 0px 4px 6px 0px rgba(50,50,93,0.11), 0px 1px 3px 0px rgba(0,0,0,0.08);
+    margin-top: 3rem;
+    background-color: var(--background);
+  }
+  footer {
+    position: fixed;
+    margin: 0 2rem;
+    bottom: 2rem;
+  }
+  footer p a {
+    text-decoration: underline;
+  }
+</style>
+<script>
+  import { makeAuth } from '../services/authService.js';
+  export default {
+    data() {
+      return {
+        isLoggedIn: false, 
+        username: ''
+      }
+    },
+    created() {
+      this.checkLogin()
+    }, 
+    methods: {
+      async login() {
+        localStorage.setItem('auth', 'true');
+        this.checkLogin();
+      }, 
+      async checkLogin() {
+        if(localStorage.getItem('auth') === 'true') {
+          this.isLoggedIn = true;
+          this.$emit('update', true);
+        } else {
+          this.isLoggedIn = false;
+          this.$emit('update', false);
+        }
+      }
+    }
+  }
+</script>
