@@ -1,29 +1,43 @@
-let apiURL = 'https://notgonnalie.libyzxy0.repl.co/api';
+export const apiURL = 'https://srv-ngl-l3.vercel.app';
 export async function makeAuth(username) {
-  const response = await fetch(`${apiURL}/make-auth`, {
+  try {
+  const response = await fetch(apiURL + '/api', {
     method: 'POST', 
     headers: {
       'Content-Type': 'application/json'
     }, 
     body: JSON.stringify({
-      username, 
-      timestamp: Date.now()
+      uses: 'auth-create', 
+      payload: {
+        username: username
+      }
     })
   })
   const result = await response.json();
   return result
+  } catch (err) {
+    console.log(err)
+    return null
+  }
 }
 export async function verifyAuth(token) {
-  const response = await fetch(`${apiURL}/verify-auth`, {
+  try {
+  const response = await fetch(apiURL + '/api', {
     method: 'POST', 
     headers: {
       'Content-Type': 'application/json'
     }, 
     body: JSON.stringify({
-      token, 
-      timestamp: Date.now()
+      uses: 'auth-verify', 
+      payload: {
+        token
+      }
     })
   })
   const result = await response.json();
   return result
+  } catch (err) {
+    console.log(err)
+    return null
+  }
 }

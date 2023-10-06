@@ -2,12 +2,12 @@
   <div id="main">
     <div class="card">
       <div class="header">
-        <img src='https://http.cat/404' alt="Hello">
-        <h1>{{'@' + $route.params.id}}</h1>
+        <img src='https://http.cat/404' :alt="'Photo of ' + target">
+        <h1>{{'@' + target + connected }}</h1>
       </div>
-        <textarea placeholder="Send me anonymous message..."></textarea>
+        <textarea :placeholder="'Send anonymous message to ' + target +'...'" v-model="message"></textarea>
     </div>
-    <button class="btn">Click to Send</button>
+    <button class="btn" @click="send()">Click to Send</button>
   </div>
 </template>
 <style scoped>
@@ -43,9 +43,9 @@
     height: 10rem;
     width: 100%;
     padding: 1rem;
-    font-size: 25px;
+    font-size: 26px;
     border-radius: 0px 0px 20px 20px;
-    background-color: var(--color-b);
+    background: linear-gradient(90deg, var(--color-c) 0%, var(--color-b) 100%);
     font-family: 'Nunito', cursive;
     font-weight: 600;
     color: var(--text-color-a);
@@ -87,14 +87,31 @@
   }
 </style>
 <script>
+  import { state, sendMessage } from '../services/messagingService';
   export default {
     data() {
       return {
-        usr: this.$route.params.id
+        target: this.$route.params.id, 
+        message: ''
+      }
+    }, 
+    computed: {
+      connected() {
+        return state.connected
       }
     }, 
     created() {
-     // alert(this.usr)
+      
+    }, 
+    methods: {
+       async send() {
+         if(state.connected) {
+         let status = await sendMessage(this.target, this.message);
+         alert('Status: ',status);
+         } else {
+           alert('Error while connecting to web socket')
+         }
+       }
     }
   }
 </script>

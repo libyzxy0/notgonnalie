@@ -1,7 +1,6 @@
 import { io } from "socket.io-client";
 import { reactive } from "vue";
-
-const apiURL = 'https://notgonnalie.libyzxy0.repl.co';
+import { apiURL } from '../services/authService';
 
 export const state = reactive({
   connected: false,
@@ -9,11 +8,13 @@ export const state = reactive({
 });
 
 const socket = io(apiURL, {
-  autoConnect: true
+  autoConnect: false
 });
+socket.connect()
 
 socket.on("connect", () => {
   state.connected = true;
+  alert('Connected!');
 });
 
 socket.on("disconnect", () => {
@@ -24,22 +25,11 @@ socket.on('event', (message) => {
   status.messages.push(message);
 })
 
-export async function fetchMessages(token) {
-  const response = await fetch(`${apiURL}/api/send-message`, {
-    method: 'POST', 
-    headers: {
-      'Content-Type': 'application/json'
-    }, 
-    body: JSON.stringify({ token })
-  })
-  const result = await response.json();
-  return result
-}
-
 export async function sendMessage(target, message) {
   socket.emit('send-message', {
     target, 
     message, 
     timestamp: Date.now()
   })
+  return 'Sent'
 }

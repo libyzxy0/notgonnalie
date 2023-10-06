@@ -6,7 +6,7 @@
 <template>
   <Login @update="onUpdate($event)" />
   <div id="main" :class="isLoggedIn ? '' : 'hidden'">
-    <AccountBanner :userID="isLoggedIn" />
+    <AccountBanner :userID="username" />
     <Inbox />
   </div>
 </template>
@@ -24,12 +24,14 @@
   export default {
     data() {
       return {
-        isLoggedIn: false
+        isLoggedIn: false, 
+        username: ''
       }
     },
     methods: {
       onUpdate(data) {
-         this.isLoggedIn = data;
+         this.isLoggedIn = data.isLoggedIn;
+         this.username = data.username;
       }
     }
   }

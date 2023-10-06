@@ -7,7 +7,7 @@
       <button @click="login()">Create My Account</button>
     </div>
     <footer>
-      <p>By Continuing, You agree to our <a>Terms of Use</a> and have read and agreed to our <a>Privacy Policy</a></p>
+      <p>By Continuing, You agree to our <a href="/">Terms of Use</a> and have read and agreed to our <a href="/">Privacy Policy</a></p>
     </footer>
   </div>
 </template>
@@ -68,15 +68,16 @@
   }
   footer p a {
     text-decoration: underline;
+    color: var(--text-color-b)
   }
 </style>
 <script>
-  import { makeAuth } from '../services/authService.js';
+  import { makeAuth, verifyAuth } from '../services/authService.js';
   export default {
     data() {
       return {
         isLoggedIn: false, 
-        username: ''
+        username: '',
       }
     },
     created() {
@@ -84,17 +85,51 @@
     }, 
     methods: {
       async login() {
-        localStorage.setItem('auth', 'true');
-        this.checkLogin();
+        if(this.username) {
+          try {
+          let res = await makeAuth(this.username);
+          if(res && res.code == 200) {
+          this.$cookie.setCookie('token', res.token, {
+          expire: '365d',
+          path: '/',
+          domain: '',
+          secure: '',
+          sameSite: ''
+        })
+          this.checkLogin();
+           } else {
+            alert('An error occurred while creating account');
+           }
+         } catch (err) {
+            alert('An error occurred while authenticating');
+         }
+        } else {
+          alert('Please fill up the input!')
+        }
       }, 
       async checkLogin() {
-        if(localStorage.getItem('auth') === 'true') {
+        try {
+        if(this.$cookie.getCookie('token')) {
+          let res = await verifyAuth(this.$cookie.getCookie('token'));
+          if(res && res.code == 200) {
           this.isLoggedIn = true;
-          this.$emit('update', true);
+          this.$emit('update', {
+            isLoggedIn: true, 
+            username: res.data.username
+          });
+         } else {
+            alert('An error occurred while authenticating account');
+         }
         } else {
           this.isLoggedIn = false;
-          this.$emit('update', false);
+          this.$emit('update', {
+            isLoggedIn: false, 
+            username: ''
+          });
         }
+       } catch (error) {
+           alert('An error occurred while authenticating');
+       }
       }
     }
   }
