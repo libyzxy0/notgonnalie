@@ -4,7 +4,8 @@ const socketIo = require('socket.io');
 const cors = require('cors');
 const app = express();
 const server = http.createServer(app);
-
+const database = require('./src/firebase.js');
+const jwt = require('./src/jwt');
 const corsOptions = {
   origin: 'https://notgonnalie.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -26,23 +27,20 @@ app.get('/', (req, res) => {
   res.send('Ngl-Server by libyzxy0.')
 });
 
-app.post('/api', (req, res) => {
-  res.setHeader('Content-Type', 'text/html');
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.end(`Body: ${req.body.test}`);
-});    
-
 io.on('connection', (socket) => {
   console.log('A user connected');
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
-
-  socket.on('send-message', (message) => {
-    console.log('Received message: ' + message);
-    io.emit('event', message);
-  });
 });
+
+app.post('/api', (req, res) => {
+  require('./src/app').api(req, res, {
+    jwt: jwt, 
+    db: database,
+    io: io
+  });
+});    
 
 const port = process.env.PORT || 3000;
 
