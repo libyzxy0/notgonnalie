@@ -21,6 +21,12 @@ const io = socketIo(server, {
 
 app.get('/', (req, res) => res.send('Ngl-Server by libyzxy0.'));
 
+app.get('/api', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.end(`shesh`);
+});    
+
 io.on('connection', (socket) => {
   console.log('A user connected');
   socket.on('disconnect', () => {
