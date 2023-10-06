@@ -6,8 +6,11 @@ const app = express();
 const server = http.createServer(app);
 const database = require('./src/firebase.js');
 const jwt = require('./src/jwt');
+
+const allowedOrigins = ['https://notgonnalie.vercel.app', 'https://notgonnalie.libyzxy0.repl.co'];
+
 const corsOptions = {
-  origins: ['https://notgonnalie.vercel.app', 'https://notgonnalie.libyzxy0.repl.co'],
+  origins: allowedOrigins,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
@@ -17,7 +20,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}));
 const io = socketIo(server, {
   cors: {
-    origin: 'https://notgonnalie.vercel.app'
+    origins: allowedOrigins
   }
 })
 
