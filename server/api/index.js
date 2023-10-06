@@ -12,19 +12,24 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}));
 const io = socketIo(server, {
   cors: {
     origin: 'https://notgonnalie.vercel.app'
   }
 })
 
-app.get('/', (req, res) => res.send('Ngl-Server by libyzxy0.'));
-
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.end(`shesh`);
+  res.send('Ngl-Server by libyzxy0.')
+});
+
+app.post('/api', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.end(`Body: ${req.body.test}`);
 });    
 
 io.on('connection', (socket) => {
