@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}));
 const io = socketIo(server, {
   cors: {
-    origins: allowedOrigins
+    origin: allowedOrigins
   }
 })
 
