@@ -53,6 +53,7 @@ socket.on('event', async (message) => {
     if(res && res.code == 200) {
       if(res.data.username == message.data.target) {
         state.messages.push(message.data);
+        console.log(event)
       }
     }
   }
@@ -64,5 +65,6 @@ export async function sendMessage(target, message) {
     message, 
     timestamp: Date.now()
   })
+  console.log(target, message)
   return 'Sent'
 }
