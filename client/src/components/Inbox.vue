@@ -1,10 +1,12 @@
+<script setup>
+  import Box from '../components/Box.vue';
+</script>
 <template>
   <div id="inbox">
     <h1>Inbox</h1>
     <ul class="cards">
-      <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-</svg></li>
+      <Box v-for="(message, index) in messages"
+      :key="index" :text="message.message" :timestamp="message.timestamp" />
     </ul>
   </div>
 </template>
@@ -20,22 +22,27 @@
     max-width: 1000px;
     list-style-type: none;
   }
-  .cards li {
-    width: 30%;
-    height: 7rem;
-    background: linear-gradient(90deg, var(--color-c) 0%, var(--color-b) 100%);
-    float: left;
-    position: relative;
-    overflow: hidden;
-    margin: 1.5%;
-    border-radius: 15px;
-    box-shadow: 0px 4px 6px 0px rgba(50,50,93,0.11) , 0px 1px 3px 0px rgba(0,0,0,0.08);
-    display: grid;
-    place-items: center;
-  }
-  li svg {
-    height: 4rem;
-    width: 4rem;
-    stroke: var(--background);
-  }
 </style>
+<script>
+import { state, fetchMessages } from '../services/messagingService';
+
+export default {
+  data() {
+    return {
+      messages: []
+    }
+  }, 
+  computed: {
+    messages() {
+      return state.messages;
+    }
+  }, 
+  async created() {
+    try {
+      await fetchMessages(this.$cookie.getCookie('token'));
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  }
+}
+</script>

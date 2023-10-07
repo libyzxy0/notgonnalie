@@ -1,4 +1,7 @@
-export const apiURL = 'https://srv-ngl-l3.vercel.app';
+//export const apiURL = 'https://srv-ngl-l3.vercel.app';
+
+export const apiURL = 'https://ngl-server.libyzxy0.repl.co';
+
 export async function makeAuth(username) {
   try {
   const response = await fetch(apiURL + '/api', {

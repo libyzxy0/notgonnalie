@@ -3,7 +3,7 @@
     <div class="card">
       <div class="header">
         <img src='https://http.cat/404' :alt="'Photo of ' + target">
-        <h1>{{'@' + target + connected }}</h1>
+        <h1>{{'@' + target }}</h1>
       </div>
         <textarea :placeholder="'Send anonymous message to ' + target +'...'" v-model="message"></textarea>
     </div>
@@ -21,11 +21,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-image: linear-gradient(120deg, var(--color-b) 0%, var(--color-c) 100%);
+    background-image: linear-gradient(90deg, var(--color-c) 0%, var(--color-b) 100%);
   }
   .card {
     width: 90%;
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
     border-radius: 20px;
   }
   .header {
@@ -49,6 +48,7 @@
     font-family: 'Nunito', cursive;
     font-weight: 600;
     color: var(--text-color-a);
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
   } 
   textarea::placeholder {
     color: grey;
@@ -84,6 +84,7 @@
     align-items: center;
     font-size: 22px;
     font-family: var(--font-stylish);
+    box-shadow: 0px 4px 6px 0px rgba(50,50,93,0.11) , 0px 1px 3px 0px rgba(0,0,0,0.08);
   }
 </style>
 <script>
