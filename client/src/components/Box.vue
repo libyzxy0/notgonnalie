@@ -1,7 +1,7 @@
 <script setup>
   defineProps({
     text: String, 
-    timestamp: String
+    timestamp: Number
   })
 </script>
 <template>

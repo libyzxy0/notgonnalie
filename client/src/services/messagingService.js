@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 import { reactive } from "vue";
-
+import { showNotification } from '../services/notificationService'
 import { apiURL, verifyAuth } from '../services/authService';
 
 export const state = reactive({
@@ -80,6 +80,7 @@ socket.on('event', async (message) => {
     if(res && res.code == 200) {
       if(res.data.username == message.data.target) {
         state.messages.push(message.data);
+        showNotification(message.data.message)
         console.log(event)
       }
     }

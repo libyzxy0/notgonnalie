@@ -6,7 +6,7 @@
 <template>
   <header>
     <h1>@{{ userID }}</h1>
-    <p><b>Your Link: </b>https://notgonnalie.vercel.app/{{ userID }}</p>
+    <p>https://notgonnalie.vercel.app/{{ userID }}</p>
   </header>
 </template>
 <style scoped>
