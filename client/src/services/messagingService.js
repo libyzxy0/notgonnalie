@@ -26,6 +26,7 @@ export async function fetchMessages(token) {
   })
     const result = await response.json();
     state.messages = result;
+    console.log(state.messages)
   } catch (err) {
     console.log(err)
   }

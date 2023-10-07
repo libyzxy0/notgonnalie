@@ -3,7 +3,7 @@
 </script>
 <template>
   <div id="inbox">
-    <h1>Inbox</h1>
+    <h1>Inbox {{ JSON.stringify(messages) }}</h1>
     <ul class="cards">
       <Box v-for="(message, index) in messages"
       :key="index" :text="message.message" :timestamp="message.timestamp" />
