@@ -78,6 +78,7 @@
       return {
         isLoggedIn: false, 
         username: '',
+        isLoading: 'true'
       }
     },
     created() {
@@ -117,6 +118,7 @@
             isLoggedIn: true, 
             username: res.data.username
           });
+          this.isLoading = 'false';
          } else {
             alert('An error occurred while authenticating account');
          }

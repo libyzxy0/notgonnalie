@@ -4,6 +4,7 @@
   import Login from '../pages/Login.vue';
 </script>
 <template>
+  <Preloader :isLoading="isLoading" />
   <Login @update="onUpdate($event)" />
   <div id="main" :class="isLoggedIn ? '' : 'hidden'">
     <AccountBanner :userID="username" />
@@ -25,13 +26,15 @@
     data() {
       return {
         isLoggedIn: false, 
-        username: ''
+        username: '', 
+        isLoading: 'true'
       }
     },
     methods: {
       onUpdate(data) {
          this.isLoggedIn = data.isLoggedIn;
          this.username = data.username;
+         this.isLoading = 'false';
       }
     }
   }

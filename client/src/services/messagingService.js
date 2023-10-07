@@ -32,6 +32,32 @@ export async function fetchMessages(token) {
   }
 }
 
+export async function isUserExist(username) {
+  try {
+  const response = await fetch(apiURL + '/api', {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json'
+    }, 
+    body: JSON.stringify({
+      uses: 'api-usrfind', 
+      payload: {
+        username: username
+      }
+    })
+  })
+    const result = await response.json();
+    if(result && result.code == 200) {
+      return true
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+    return null
+  }
+}
+
 const socket = io(apiURL, {
   autoConnect: false
 });

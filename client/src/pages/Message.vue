@@ -1,4 +1,5 @@
 <template>
+  <Preloader :isLoading="isLoading" />
   <div id="main">
     <div class="card">
       <div class="header">
@@ -88,16 +89,29 @@
   }
 </style>
 <script>
-  import { state, sendMessage } from '../services/messagingService';
+  import { state, sendMessage, isUserExist } from '../services/messagingService';
   export default {
     data() {
       return {
         target: this.$route.params.id, 
         message: '', 
-        btn: 'Click to Send'
+        btn: 'Click to Send', 
+        isLoading: 'true'
       }
     },
+    created() {
+      this.checkUser()
+    }, 
     methods: {
+       async checkUser() {
+         let isUser = await isUserExist(this.target);
+         if(!isUser) {
+           this.isLoading = 'true';
+           this.$router.push({ path: '/' })
+         } else {
+           this.isLoading = 'false';
+         }
+       }, 
        async send() {
          if(this.message) {
          if(state.connected) {
