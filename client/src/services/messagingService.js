@@ -5,7 +5,7 @@ import { apiURL, verifyAuth } from '../services/authService';
 
 export const state = reactive({
   connected: false,
-  messages: [], 
+  messages: [],
   tk: ''
 });
 

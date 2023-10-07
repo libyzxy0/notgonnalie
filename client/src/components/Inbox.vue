@@ -32,17 +32,19 @@ export default {
       messages: []
     }
   }, 
-  computed: {
-    messages() {
-      return state.messages;
-    }
-  }, 
   async created() {
     try {
       await fetchMessages(this.$cookie.getCookie('token'));
+      this.messages = state.messages;
     } catch (error) {
       console.error('Error fetching messages:', error);
+    }
+  },
+  watch: {
+    'state.messages': function(newMessages) {
+      this.messages = newMessages;
     }
   }
 }
 </script>
+
