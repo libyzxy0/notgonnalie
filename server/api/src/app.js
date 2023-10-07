@@ -38,6 +38,33 @@ module.exports.api = async (req, res, utils) => {
         } else {
           res.send({ code: 401, data: null })
         }
+    } else if (uses == 'api-usrfind') {
+      let isAccountExist = accounts.find((acc) => acc.username === payload.username);
+      if(isAccountExist) {
+        res.send({ code: 200, message: 'Account has found' })
+      } else {
+        res.send({ code: 404, message: 'Account not found' })
+      }
+    } else if (uses == 'api-msgs') {
+      console.log('A user requested to fetch messages');
+      try {
+        let msgs = await db.readData('messages') || [];
+        let data = utils.jwt.verifyToken(payload.token);
+        console.log(msgs, data)
+        if(!!data) {
+        let cooked = [];
+        for(let i = 0;i < msgs.length;i++) {
+          if(msgs[i].target == data.username) {
+            cooked.push(msgs[i])
+          }
+        }
+        res.send(cooked);
+       } 
+      } catch (err) {
+        res.send({ error: "An error occurred" })
+      }
+    } else {
+        res.send('Err')                                 
     }
   } else {
     res.send({ code: 422, error: "Missing parameters", token: null })
@@ -45,4 +72,17 @@ module.exports.api = async (req, res, utils) => {
  } catch (error) {
     res.send({ code: 500, error: "Api error", token: null })
     }
+}
+module.exports.socket = async (io, socket, utils) => {
+  socket.on('send-message', (message) => {
+    utils.db.writeData('messages', message)
+    io.emit('event', {
+      type: 'event', 
+      data: {
+        target: message.target,
+        message: message.message,
+        timestamp: message.timestamp
+      }
+    })
+  })
 }

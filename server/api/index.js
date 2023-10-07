@@ -31,9 +31,14 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('A user connected');
+  let isConnected = false;
+  isConnected = true;
+  require('./src/app').socket(io, socket, {
+    isConnected, 
+    db: database
+  });
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+    isConnected = false;
   });
 });
 
