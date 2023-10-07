@@ -7,7 +7,7 @@
       </div>
         <textarea :placeholder="'Send anonymous message to ' + target +'...'" v-model="message"></textarea>
     </div>
-    <button class="btn" @click="send()">Click to Send</button>
+    <button class="btn" @click="send()">{{ btn }}</button>
   </div>
 </template>
 <style scoped>
@@ -93,26 +93,42 @@
     data() {
       return {
         target: this.$route.params.id, 
-        message: ''
+        message: '', 
+        btn: 'Click to Send'
       }
-    }, 
-    computed: {
-      connected() {
-        return state.connected
-      }
-    }, 
-    created() {
-      
-    }, 
+    },
     methods: {
        async send() {
+         if(this.message) {
          if(state.connected) {
-         let status = await sendMessage(this.target, this.message);
-         alert('Status: ',status);
+         await sendMessage(this.target, this.message);
+         this.message = '';
+           this.btn = 'Message Sent!'
+           setTimeout(() => {
+             this.btn = 'Click to Send!';
+           }, 3000)
          } else {
-           alert('Error while connecting to web socket')
+           this.btn = 'Try again'
+           setTimeout(() => {
+             this.btn = 'Click to Send!';
+           }, 3000)
          }
+       } else {
+           this.btn = 'Please put a message!'
+           setTimeout(() => {
+             this.btn = 'Click to Send!';
+           }, 3000)
+       } 
        }
+    }, 
+    watch: {
+    'state.connected': function(s) {
+      if(s) {
+        this.btn = 'Click to Send!';
+      } else {
+        this.btn = 'Failed to connect';
+      }
     }
+  }
   }
 </script>
