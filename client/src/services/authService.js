@@ -1,23 +1,23 @@
 //export const apiURL = 'https://srv-ngl-l3.vercel.app';
 
-export const apiURL = 'https://ngl-server.libyzxy0.repl.co';
+export const apiURL = 'https://ngl-server.libyzxy0.repl.co'
 
 export async function makeAuth(username) {
   try {
-  const response = await fetch(apiURL + '/api', {
-    method: 'POST', 
-    headers: {
-      'Content-Type': 'application/json'
-    }, 
-    body: JSON.stringify({
-      uses: 'auth-create', 
-      payload: {
-        username: username
-      }
+    const response = await fetch(apiURL + '/api', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        uses: 'auth-create',
+        payload: {
+          username: username
+        }
+      })
     })
-  })
-  const result = await response.json();
-  return result
+    const result = await response.json()
+    return result
   } catch (err) {
     console.log(err)
     return null
@@ -25,20 +25,20 @@ export async function makeAuth(username) {
 }
 export async function verifyAuth(token) {
   try {
-  const response = await fetch(apiURL + '/api', {
-    method: 'POST', 
-    headers: {
-      'Content-Type': 'application/json'
-    }, 
-    body: JSON.stringify({
-      uses: 'auth-verify', 
-      payload: {
-        token
-      }
+    const response = await fetch(apiURL + '/api', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        uses: 'auth-verify',
+        payload: {
+          token
+        }
+      })
     })
-  })
-  const result = await response.json();
-  return result
+    const result = await response.json()
+    return result
   } catch (err) {
     console.log(err)
     return null

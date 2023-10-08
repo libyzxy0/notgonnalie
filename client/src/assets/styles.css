@@ -13,13 +13,12 @@ font-family: 'Quicksand', sans-serif;
 :root {
   --background: #ffffff;
   --foreground: #f5f5f5;
-  --color-a: #00FFCA;
-  --color-b: #B9F3E4;
-  --color-c: 
-#C0EEF2;
-  --text-color-a: #1A1A1A;
+  --color-a: #00ffca;
+  --color-b: #b9f3e4;
+  --color-c: #c0eef2;
+  --text-color-a: #1a1a1a;
   --text-color-b: #3a3a3a;
-  
+
   --font-stylish: 'Kalam', cursive;
   --font-normal: 'Quicksand', sans-serif;
   --font-primary: 'Nunito', sans-serif;

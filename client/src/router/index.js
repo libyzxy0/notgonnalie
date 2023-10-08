@@ -6,12 +6,12 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../pages/Main.vue')
-    }, 
+    },
     {
       path: '/:id',
       name: 'message',
       component: () => import('../pages/Message.vue')
-    }, 
+    }
   ]
 })
 

@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run format && vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview", 
+    "format": "prettier --write src/"
   },
   "dependencies": {
     "socket.io-client": "^4.7.2",
@@ -15,6 +16,10 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3",
     "vite": "^4.4.9",
     "vite-plugin-pwa": "^0.16.5"
   }
