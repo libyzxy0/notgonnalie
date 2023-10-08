@@ -4,7 +4,7 @@
     <p>Received/Send Message anonymously!</p>
     <div class="content">
       <input @input="validate()" type="text" placeholder="@libyzxy0" v-model="username">
-      <p :class="isValidInput ? 'alert-green' : 'alert-red'">{{ isValidInput ? 'Good!' : errorMsg }}</p>
+      <p :class="isValidInput ? 'alert-green' : 'alert-red'">{{ errMsg }}</p>
       <button @click="login()" :disabled="!isValidInput">Create My Account</button>
     </div>
     <footer>
