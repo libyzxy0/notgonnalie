@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&family=Kalam:wght@300&family=Quicksand:wght@300&display=swap');
+
 /*
 font-family: 'Kalam', cursive;
 font-family: 'Nunito', sans-serif;
@@ -18,19 +19,11 @@ font-family: 'Quicksand', sans-serif;
 #C0EEF2;
   --text-color-a: #1A1A1A;
   --text-color-b: #3a3a3a;
+  
   --font-stylish: 'Kalam', cursive;
   --font-normal: 'Quicksand', sans-serif;
-  --font-primary: 'Nunito', sans-serif;;
+  --font-primary: 'Nunito', sans-serif;
 }
 .hidden {
   display: none;
-}
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
 }

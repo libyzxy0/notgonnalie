@@ -46,7 +46,7 @@
     font-size: 26px;
     border-radius: 0px 0px 20px 20px;
     background: linear-gradient(90deg, var(--color-c) 0%, var(--color-b) 100%);
-    font-family: 'Nunito', cursive;
+    font-family: var(--font-primary);
     font-weight: 600;
     color: var(--text-color-a);
     box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;

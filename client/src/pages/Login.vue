@@ -3,8 +3,9 @@
     <h1>Ngl - Not Gonna Lie</h1>
     <p>Received/Send Message anonymously!</p>
     <div class="content">
-      <input type="text" placeholder="@libyzxy0" v-model="username">
-      <button @click="login()">Create My Account</button>
+      <input @input="validate()" type="text" placeholder="@libyzxy0" v-model="username">
+      <p :class="isValidInput ? 'alert-green' : 'alert-red'">{{ isValidInput ? 'Good!' : errorMsg }}</p>
+      <button @click="login()" :disabled="!isValidInput">Create My Account</button>
     </div>
     <footer>
       <p>By Continuing, You agree to our <a href="/">Terms of Use</a> and have read and agreed to our <a href="/">Privacy Policy</a></p>
@@ -30,6 +31,15 @@
     font-family: var(--font-primary);
     font-weight: 600;
     color: var(--text-color-b);
+  }
+  .alert-green {
+    margin: 3px 4rem;
+    color: white;
+  }
+  .alert-red {
+    margin-top: 3px;
+    color: red;
+    margin: 3px 8px rem;
   }
   .content {
     margin-top: 3rem;
@@ -78,15 +88,31 @@
       return {
         isLoggedIn: false, 
         username: '',
-        isLoading: 'true'
+        isLoading: 'true', 
+        isValidInput: false,
+        errorMsg: ''
       }
     },
     created() {
       this.checkLogin()
     }, 
     methods: {
+      validate() {
+         let regex = /^[a-zA-Z0-9]+$/;
+         if(!this.username) {
+           this.isValidInput = false;
+           this.errorMsg = 'Please fill up the blanks';
+         } else {
+           if (regex.test(this.username)) {
+             this.isValidInput = true;
+             this.errorMsg = 'Good dog!';
+           } else {
+             this.isValidInput = false;
+             this.errorMsg = "You can't use that character";
+           }
+         }
+      }, 
       async login() {
-        if(this.username) {
           try {
           let res = await makeAuth(this.username);
           if(res && res.code == 200) {
@@ -104,9 +130,6 @@
          } catch (err) {
             alert('An error occurred while authenticating');
          }
-        } else {
-          alert('Please fill up the input!')
-        }
       }, 
       async checkLogin() {
         try {
