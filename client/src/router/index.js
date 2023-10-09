@@ -5,7 +5,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../pages/Main.vue')
+      component: () => import('../pages/Main.vue'),
+      meta: {
+        title: 'Not Gonna Lie'
+      }
     },
     {
       path: '/:id',
@@ -13,6 +16,12 @@ const router = createRouter({
       component: () => import('../pages/Message.vue')
     }
   ]
+})
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+    ? to.meta.title
+    : `Send anonymous message to ${to.params?.id}!`
+  next()
 })
 
 export default router

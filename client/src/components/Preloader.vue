@@ -1,14 +1,45 @@
-<script setup>
-defineProps({
-  isLoading: String
-})
-</script>
 <template>
-  <div :class="isLoading == 'true' ? 'preloader' : 'hide'">
+  <div :class="props.isLoading == 'true' ? 'preloader' : 'hide'">
     <div class="spinner"></div>
-    <h1>Loading...</h1>
+    <h1 class="loading-text">Loading</h1>
+    <h1 class="loading-text">{{ data.typedText }}</h1>
   </div>
 </template>
+
+<script setup>
+import { reactive, watchEffect } from 'vue'
+
+let props = defineProps({
+  isLoading: String
+})
+
+const data = reactive({
+  typedText: ''
+})
+
+watchEffect(() => {
+  if (props.isLoading === 'true') {
+    startTypewriterAnimation()
+  }
+})
+
+function startTypewriterAnimation() {
+  const textToType = '••••••••'
+  let currentIndex = 0
+
+  const typingInterval = setInterval(() => {
+    if (currentIndex < textToType.length) {
+      data.typedText += textToType[currentIndex]
+      currentIndex++
+    } else {
+      // Clear the text and reset index when animation completes
+      data.typedText = ''
+      currentIndex = 0
+    }
+  }, 900)
+}
+</script>
+
 <style scoped>
 .preloader {
   position: fixed;
@@ -37,13 +68,14 @@ defineProps({
   border: 6px solid var(--foreground);
   border-top-color: var(--color-a);
   border-radius: 50%;
-  animation: spin 0.6s ease-in-out infinite;
+  animation: spin 1s linear infinite;
 }
-h1 {
+.loading-text {
   margin-top: 1rem;
   font-family: var(--font-normal);
   font-weight: 600;
   font-size: 19px;
+  animation: pulse 1s ease-in-out infinite;
 }
 @keyframes spin {
   0% {

@@ -1,4 +1,5 @@
 <script setup>
+import MessagePopup from '../components/MessagePopup.vue'
 defineProps({
   text: String,
   timestamp: Number
@@ -20,6 +21,7 @@ defineProps({
       />
     </svg>
   </li>
+  <MessagePopup :text="textHolder" @update="onUpdate($event)"/>
 </template>
 <style scoped>
 .cards li {
@@ -45,9 +47,19 @@ li svg {
 </style>
 <script>
 export default {
+  data() {
+    return {
+      textHolder: ''
+    }
+  },
   methods: {
     popup() {
-      alert(this.text + this.timestamp)
+      this.textHolder = this.text;
+    }, 
+    onUpdate(data) {
+      if(data.hide) {
+         this.textHolder = '';
+      }
     }
   }
 }

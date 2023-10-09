@@ -4,7 +4,7 @@ export function showNotification(msg) {
       navigator.serviceWorker.ready
         .then((registration) => {
           registration.showNotification('New Message!', {
-            body: msg,
+            body: 'Click to view message!',
             icon: '/icons/icon.png',
             vibrate: [200, 100, 200, 100, 200, 100, 200],
             tag: 'vibration-sample',
@@ -16,10 +16,6 @@ export function showNotification(msg) {
               }
             ]
           })
-          self.addEventListener('notificationclick', function (event) {
-            event.notification.close()
-            clients.openWindow('https://pornhub.com')
-          })
         })
         .catch((err) => alert('Service Worker registration error: ' + err))
     }
@@ -27,3 +23,10 @@ export function showNotification(msg) {
     alert('Notification API error: ' + err)
   }
 }
+
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close()
+  if (event.action === 'explore') {
+    clients.openWindow('https://example.com')
+  }
+})

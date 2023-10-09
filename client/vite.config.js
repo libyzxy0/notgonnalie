@@ -14,6 +14,9 @@ export default defineConfig({
       devOptions: {
         enabled: true
       }, 
+      start_url: '/?mode=standalone', 
+      background_color: '#121212',
+      
       manifest: {
         name: "Not Gonna Lie",
         short_name: "NGL",

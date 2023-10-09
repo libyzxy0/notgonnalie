@@ -6,12 +6,12 @@
       <input
         @input="validate()"
         type="text"
-        placeholder="@libyzxy0"
+        placeholder="Who are you?"
         v-model="username"
       />
       <p :class="isValidInput ? 'alert-green' : 'alert-red'">{{ errorMsg }}</p>
       <button @click="login()" :disabled="!isValidInput">
-        Create My Account
+        {{ buttonText }}
       </button>
     </div>
     <footer>
@@ -44,7 +44,7 @@ p {
 }
 .alert-green {
   margin: 3px 4rem;
-  color: white;
+  color: green;
 }
 .alert-red {
   margin-top: 3px;
@@ -97,6 +97,7 @@ footer p a {
 </style>
 <script>
 import { makeAuth, verifyAuth } from '../services/authService.js'
+import { isUserExist } from '../services/messagingService'
 export default {
   data() {
     return {
@@ -104,14 +105,15 @@ export default {
       username: '',
       isLoading: 'true',
       isValidInput: false,
-      errorMsg: ''
+      errorMsg: '',
+      buttonText: 'Create My Account'
     }
   },
   created() {
     this.checkLogin()
   },
   methods: {
-    validate() {
+    async validate() {
       let regex = /^[a-zA-Z0-9]+$/
       if (!this.username) {
         this.isValidInput = false
@@ -119,7 +121,7 @@ export default {
       } else {
         if (regex.test(this.username)) {
           this.isValidInput = true
-          this.errorMsg = 'Good dog!'
+          this.errorMsg = 'Good!'
         } else {
           this.isValidInput = false
           this.errorMsg = "You can't use that character"
@@ -128,6 +130,7 @@ export default {
     },
     async login() {
       try {
+        this.buttonText = 'Creating account wait...'
         let res = await makeAuth(this.username)
         if (res && res.code == 200) {
           this.$cookie.setCookie('token', res.token, {
@@ -137,15 +140,16 @@ export default {
             secure: '',
             sameSite: ''
           })
+          this.buttonText = 'Redirectig...'
           this.checkLogin()
         } else {
-          this.$cookie.removeCookie('token', {
-            path: '/',
-            domain: ''
-          })
+          this.isValidInput = false
+          this.buttonText = 'Create My Account'
+          this.errorMsg = 'Username already in use!'
         }
       } catch (err) {
-        alert('An error occurred while authenticating')
+        this.isValidInput = false
+        this.errorMsg = 'Server rejected the request'
       }
     },
     async checkLogin() {
@@ -160,7 +164,12 @@ export default {
             })
             this.isLoading = 'false'
           } else {
-            alert('An error occurred while authenticating account')
+            this.isLoading = 'false'
+            this.isLoggedIn = false
+            this.$emit('update', {
+              isLoggedIn: false,
+              username: ''
+            })
           }
         } else {
           this.isLoggedIn = false
