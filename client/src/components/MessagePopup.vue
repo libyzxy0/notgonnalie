@@ -51,11 +51,11 @@
   bottom: 0;
   display: grid;
   place-items: center;
-  background: var(--foreground);
+  background-color: var(--foreground);
   z-index: 4;
 }
 .card {
-  background: var(--foreground);
+  background-color: var(--foreground);
   height: 18rem;
   width: 85%;
   border-radius: 25px;
@@ -73,6 +73,7 @@
   box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
   margin-top: 1.5rem;
   border-radius: 25px 25px 0px 0px;
+  background-color: var(--background);
 }
 .linear-gradient {
   display: grid;
