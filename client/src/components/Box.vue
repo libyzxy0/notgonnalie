@@ -21,7 +21,7 @@ defineProps({
       />
     </svg>
   </li>
-  <MessagePopup :text="textHolder" @update="onUpdate($event)"/>
+  <MessagePopup :text="textHolder" @update="onUpdate($event)" />
 </template>
 <style scoped>
 .cards li {
@@ -54,11 +54,11 @@ export default {
   },
   methods: {
     popup() {
-      this.textHolder = this.text;
-    }, 
+      this.textHolder = this.text
+    },
     onUpdate(data) {
-      if(data.hide) {
-         this.textHolder = '';
+      if (data.hide) {
+        this.textHolder = ''
       }
     }
   }
